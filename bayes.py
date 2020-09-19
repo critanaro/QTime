@@ -12,8 +12,8 @@ SHAPE = float(shape)
 RATE = float(rate)
 #import matplotlib.pyplot as plt
 
-##The point of the script is to abstract away all of the fucking math 
-##And just simply attempt to estimate the true rate at which people 
+##The point of the script is to abstract away all of the fucking math
+##And just simply attempt to estimate the true rate at which people
 ##Come into coffehouse. The mean and a 95% credible interval are provided;
 ##The site should display the credible interval as its "guess" of how many
 ##people are waiting at coffeehouse based on past data
@@ -66,27 +66,8 @@ def credible_interval(shape, rate, alpha):
     ub = ss.gamma.ppf(1 - alpha/2, a = shape, scale = 1/rate)
     return lb, ub
 
-def construct_credible_interval(data, alpha = 0.05):
-    """
-    final function
-    """
-    a, b = jeffreys_prior(data, a_in = shape, b_in = rate)
-    shape, rate = posterior(data, a, b)
-    return credible_interval(shape, rate, alpha)
-
-for item in parameter_dict.items():
-    a, b = jeffreys_prior(item[1])
-    shape, rate = posterior(item[1], a, b)
-    item[1].pop()
-    item[1].append(shape / rate)
-    item[1].append(shape)
-    item[1].append(rate)
-
-print(parameter_dict)
-    
-
-#np.random.seed(5)
-#random_data = np.random.poisson(lam=25, size=100)
-#a, b = jeffreys_prior(random_data)
-#shape, rate = posterior(random_data, a, b)
-#print(credible_interval(shape, rate, 0.05)) 
+np.random.seed(5)
+random_data = np.random.poisson(lam=25, size=100)
+a, b = jeffreys_prior(random_data)
+shape, rate = posterior(random_data, a, b)
+print(credible_interval(shape, rate, 0.05))
