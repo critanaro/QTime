@@ -36,8 +36,7 @@ def credible_interval(shape, rate, alpha):
     """
     lb = ss.gamma.ppf(alpha/2, a = shape, scale = 1/rate)
     ub = ss.gamma.ppf(1 - alpha/2, a = shape, scale = 1/rate)
-    return (lb, ub)
-
+    return lb, ub
 
 np.random.seed(5)
 random_data = np.random.poisson(lam=25, size=100)
