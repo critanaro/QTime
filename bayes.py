@@ -1,9 +1,9 @@
 import numpy as np
 import scipy.stats as ss; import scipy.special as sp
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
-##The point of the script is to abstract away all of the fucking math 
-##And just simply attempt to estimate the true rate at which people 
+##The point of the script is to abstract away all of the fucking math
+##And just simply attempt to estimate the true rate at which people
 ##Come into coffehouse. The mean and a 95% credible interval are provided;
 ##The site should display the credible interval as its "guess" of how many
 ##people are waiting at coffeehouse based on past data
@@ -26,7 +26,7 @@ def posterior(y,a,b):
     """
     shape = a + y.sum()
     rate = b + y.size
-    
+
     return shape, rate
 
 def credible_interval(shape, rate, alpha):
