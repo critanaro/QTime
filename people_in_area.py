@@ -26,4 +26,4 @@ S_d_int = int(S_d)
 pop_int = int(pop)
 
 max_no = people_in_rec_area(L_1_int, L_2_int, S_d_int)
-print(is_it_safe(pop_int, max_no))
+is_it_safe(pop_int, max_no)
