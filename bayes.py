@@ -40,18 +40,7 @@ with open(cwd + '\\' + dataset) as csv_file:
         point = int(row[1])
         parameter_dict[time] = [point]
     
-def jeffreys_prior(data, a_in = 0.5, b_in = 0):
-    """
-    input data of chaus lines as an np.array
-    and return values of a and b in an uninformative
-    gamma prior
-    """
-    a = sum(data) + a_in
-    b = len(data) + b_in
-    return a,b
-
-
-def posterior(y,a,b):
+def posterior(y,a ,b ):
     """
     given data, a, and b from the previous func
     calculate the shape and the rate of the posterior
@@ -61,7 +50,7 @@ def posterior(y,a,b):
     
     return shape, rate
 
-def credible_interval(shape, rate, alpha = 0.05):
+def credible_interval(shape, rate, alpha = 0.1):
     """
     given the shape, rate, and alpha, return
     a 1 - alpha% CI for the data
@@ -70,7 +59,7 @@ def credible_interval(shape, rate, alpha = 0.05):
     ub = ss.gamma.ppf(1 - alpha/2, a = shape, scale = 1/rate)
     return lb, ub
 
-def construct_credible_interval(data, alpha = 0.05):
+def construct_credible_interval(data, alpha = 0.1):
     """
     final function
     """
@@ -79,8 +68,7 @@ def construct_credible_interval(data, alpha = 0.05):
     return credible_interval(shape, rate, alpha)
 
 for item in parameter_dict.items():
-    a, b = jeffreys_prior(item[1])
-    shape, rate = posterior(item[1], a, b)
+    shape, rate = posterior(item[1], a = SHAPE, b = RATE)
     lb, ub = credible_interval(shape, rate)
     item[1].pop()
     item[1].append(shape / rate)
