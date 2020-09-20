@@ -61,7 +61,7 @@ def posterior(y,a,b):
     
     return shape, rate
 
-def credible_interval(shape, rate, alpha):
+def credible_interval(shape, rate, alpha = 0.05):
     """
     given the shape, rate, and alpha, return
     a 1 - alpha% CI for the data
@@ -81,10 +81,13 @@ def construct_credible_interval(data, alpha = 0.05):
 for item in parameter_dict.items():
     a, b = jeffreys_prior(item[1])
     shape, rate = posterior(item[1], a, b)
+    lb, ub = credible_interval(shape, rate)
     item[1].pop()
     item[1].append(shape / rate)
     item[1].append(shape)
     item[1].append(rate)
+    item[1].append(round(lb))
+    item[1].append(round(ub))
 
 final_list = [i for sublist in parameter_dict.values() for i in sublist]
 
@@ -115,7 +118,8 @@ def rewrite_output(ls, l1 = L1, l2 = L2, social = SOCIAL):
     second = []
     for i in range(len(lsc)):
         second.append(lsc[i])
-        second.append(is_it_safe(lsc[i], max_no))
+        if i % 5 == 0:
+            second.append(is_it_safe(lsc[i], max_no))
     #second.append(lsc[-1])
     return second
 
