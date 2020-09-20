@@ -8,7 +8,7 @@ import json
 
 cwd = os.getcwd()
 
-script, dataset, shape, rate, = argv 
+script, dataset, shape, rate = argv 
 SHAPE = float(shape)
 RATE = float(rate)
 #import matplotlib.pyplot as plt
@@ -71,7 +71,7 @@ def construct_credible_interval(data, alpha = 0.05):
     """
     final function
     """
-    a, b = jeffreys_prior(data, a_in = shape, b_in = rate)
+    a, b = jeffreys_prior(data, a_in = SHAPE, b_in = RATE)
     shape, rate = posterior(data, a, b)
     return credible_interval(shape, rate, alpha)
 
