@@ -23,7 +23,7 @@ def is_it_safe(population, max):
 L_1_int = int(L_1)
 L_2_int = int(L_2)
 S_d_int = int(S_d)
-pop_int = int(pop)
+pop_int = float(pop)
 
 max_no = people_in_rec_area(L_1_int, L_2_int, S_d_int)
 print(is_it_safe(pop_int, max_no))
