@@ -4,6 +4,7 @@ import csv
 import time
 import os
 from sys import argv
+import json
 
 cwd = os.getcwd()
 
@@ -66,8 +67,21 @@ def credible_interval(shape, rate, alpha):
     ub = ss.gamma.ppf(1 - alpha/2, a = shape, scale = 1/rate)
     return lb, ub
 
-np.random.seed(5)
-random_data = np.random.poisson(lam=25, size=100)
-a, b = jeffreys_prior(random_data)
-shape, rate = posterior(random_data, a, b)
-print(credible_interval(shape, rate, 0.05))
+def construct_credible_interval(data, alpha = 0.05):
+    """
+    final function
+    """
+    a, b = jeffreys_prior(data, a_in = shape, b_in = rate)
+    shape, rate = posterior(data, a, b)
+    return credible_interval(shape, rate, alpha)
+
+for item in parameter_dict.items():
+    a, b = jeffreys_prior(item[1])
+    shape, rate = posterior(item[1], a, b)
+    item[1].pop()
+    item[1].append(shape / rate)
+    item[1].append(shape)
+    item[1].append(rate)
+
+final_list = [i for sublist in parameter_dict.values() for i in sublist]
+print(str(final_list)[1:-1])
